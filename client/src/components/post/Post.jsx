@@ -1,35 +1,26 @@
 import "./post.css"
+import {Link} from "react-router-dom"
 
-const Post = () => {
+const Post = ({post}) => {
   return (
     <div className="post">
-      <img
-        className="postimg"
-        src="https://images.pexels.com/photos/14958001/pexels-photo-14958001.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
-        alt=""
-      />
+      {post.photo && <img className="postimg" src={post.photo} alt="" />}
+
       <div className="postinfo">
         <div className="postcategory">
-          <span className="postcate">Music</span>
-          <span className="postcate">Life</span>
+          {post.categories.map((c) => (
+            <span className="postcate">{c.name}</span>
+          ))}
         </div>
-        <span className="posttitle">It is a long established fact</span>
+        <Link to={`/post/${post._id}`}>
+          <span className="posttitle">{post.title}</span>
+        </Link>
         <hr />
-        <span className="postdate">1 hour ago</span>
+        <span className="postdate">
+          {new Date(post.createdAt).toDateString()}
+        </span>
       </div>
-      <p className="postdescription">
-        Many desktop publishing packages and web page editors now use Lorem
-        Ipsum as their default model text, and a search for 'lorem ipsum' will
-        uncover many web sites still in their infancy.Many desktop publishing
-        packages and web page editors now use Lorem Ipsum as their default model
-        text, and a search for 'lorem ipsum' will uncover many web sites still
-        in their infancy.Many desktop publishing packages and web page editors
-        now use Lorem Ipsum as their default model text, and a search for 'lorem
-        ipsum' will uncover many web sites still in their infancy.Many desktop
-        publishing packages and web page editors now use Lorem Ipsum as their
-        default model text, and a search for 'lorem ipsum' will uncover many web
-        sites still in their infancy.
-      </p>
+      <p className="postdescription">{post.description}</p>
     </div>
   );
 }

@@ -6,7 +6,7 @@ import Settings from "./pages/settings/Settings";
 
 import Singlepage from "./pages/single/Singlepage";
 import Write from "./pages/write/Write";
-import { BrowserRouter,Routes,Route,Link} from "react-router-dom";
+import { BrowserRouter,Routes,Route} from "react-router-dom";
 
 
 

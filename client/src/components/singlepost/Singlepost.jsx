@@ -10,7 +10,7 @@ const Singlepost = () => {
           alt=""
         />
         <h1 className="singleposttitle">
-          lorem ipsm dolor sit ammet
+          lorem koluy
           <div className="singlepostedit">
             <i class=" singleposticon far fa-edit"></i>
             <i class=" singleposticon far fa-trash-alt"></i>
