@@ -32,7 +32,14 @@
     color: white;
     border-radius: 10px;
     padding: 10px;
+
 }
+.loginbutton:disabled{
+    cursor: not-allowed;
+    background-color: coral;
+}
+
+
 .loginregisterbutton{
     position: absolute;
     top: 60px;

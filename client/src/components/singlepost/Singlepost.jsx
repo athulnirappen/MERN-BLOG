@@ -1,16 +1,36 @@
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import './singlepost.css'
 
 const Singlepost = () => {
+  const location = useLocation()
+  const path = location.pathname.split('/')[2];
+  const [post,setPost]=useState({})
+  
+
+  const getPost = async () => {
+    await axios.get("http://localhost:5000/api/posts/" + path)
+      .then(response => setPost(response.data))
+    
+  }
+
+  useEffect(() => {
+    getPost()
+  },[path])
+
+  
+
+
   return (
     <div className="singlepost">
       <div className="singlepostwrapper">
-        <img
-          className="singlepostimg"
-          src="https://images.pexels.com/photos/14443587/pexels-photo-14443587.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
-          alt=""
-        />
+        {post.photo && (
+          <img className="singlepostimg" src={post.photo} alt="" />
+        )}
+
         <h1 className="singleposttitle">
-          lorem koluy
+          {post.title}
           <div className="singlepostedit">
             <i class=" singleposticon far fa-edit"></i>
             <i class=" singleposticon far fa-trash-alt"></i>
@@ -18,38 +38,16 @@ const Singlepost = () => {
         </h1>
         <div className="singlepostinfo">
           <span className="singlepostauthor">
-            Author: <b>Athul</b>
+            Author:
+            <Link to={`/?user=${post.username}`} className='link'>
+              <b>{post.username}</b>
+            </Link>
           </span>
-          <span className="singlepostdate">1 hour ago</span>
+          <span className="singlepostdate">
+            {new Date(post.createdAt).toDateString()}
+          </span>
         </div>
-        <p className='singlepostdescription'>
-          Praesent in pulvinar diam, at efficitur purus. Donec non ornare dui,
-          in volutpat lacus. Pellentesque at ornare lorem. Maecenas hendrerit
-          leo nec mi auctor molestie. Nullam vitae consectetur mauris. Fusce
-          sodales ut ex et tempor. Donec maximus mauris libero, id imperdiet
-          nisi hendrerit lacinia. Vivamus vestibulum porttitor lectus vel
-          dapibus. Vivamus nec ultrices odio. Curabitur purus ligula, congue ac
-          leo ac, eleifend pellentesque mi. Proin consectetur imperdiet ligula.
-          Nunc condimentum justo bibendum fringilla eleifend. Nam finibus orci
-          quis neque cursus facilisisPraesent in pulvinar diam, at efficitur
-          purus. Donec non ornare dui, in volutpat lacus. Pellentesque at ornare
-          lorem. Maecenas hendrerit leo nec mi auctor molestie. Nullam vitae
-          consectetur mauris. Fusce sodales ut ex et tempor. Donec maximus
-          mauris libero, id imperdiet nisi hendrerit lacinia. Vivamus vestibulum
-          porttitor lectus vel dapibus. Vivamus nec ultrices odio. Curabitur
-          purus ligula, congue ac leo ac, eleifend pellentesque mi. Proin
-          consectetur imperdiet ligula. Nunc condimentum justo bibendum
-          fringilla eleifend. Nam finibus orci quis neque cursus
-          facilisisPraesent in pulvinar diam, at efficitur purus. Donec non
-          ornare dui, in volutpat lacus. Pellentesque at ornare lorem. Maecenas
-          hendrerit leo nec mi auctor molestie. Nullam vitae consectetur mauris.
-          Fusce sodales ut ex et tempor. Donec maximus mauris libero, id
-          imperdiet nisi hendrerit lacinia. Vivamus vestibulum porttitor lectus
-          vel dapibus. Vivamus nec ultrices odio. Curabitur purus ligula, congue
-          ac leo ac, eleifend pellentesque mi. Proin consectetur imperdiet
-          ligula. Nunc condimentum justo bibendum fringilla eleifend. Nam
-          finibus orci quis neque cursus facilisis
-        </p>
+        <p className="singlepostdescription">{post.description}</p>
       </div>
     </div>
   );
